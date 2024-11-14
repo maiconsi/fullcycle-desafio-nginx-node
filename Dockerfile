@@ -1,6 +1,6 @@
 FROM node:22.11.0-slim
 
-WORKDIR /app
+WORKDIR /home/node/app
 
 COPY ./node-app/package*.json ./node-app/app.js ./
 

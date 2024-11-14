@@ -10,8 +10,11 @@ services:
 
   node-app:
     build: .
+    volumes:
+      - ./node-app:/home/node/app    
     depends_on:
-      - mysql-db
+      mysql-db:
+        condition: service_healthy      
       
   mysql-db:
     image: mysql:8.0.40-debian
@@ -21,3 +24,8 @@ services:
     volumes:
       - ./.docker/dbdata:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 3      
