@@ -1,15 +1,12 @@
 FROM node:22.11.0-slim
 
-RUN apt update -y
-RUN apt install sudo
-RUN apt install net-tools
-RUN apt install curl -y
-RUN apt install vim -y
+WORKDIR  /home/node/app
 
-WORKDIR /home/node/app
+ENV DOCKERIZE_VERSION v0.8.0
 
-USER node
+RUN apt-get update \
+    && apt-get install -y wget \    
+    && wget -O - "https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz" | tar xzf - -C /usr/local/bin \
+    && apt-get autoremove -yqq --purge wget && rm -rf /var/lib/apt/lists/*
 
-RUN echo "alias ll='ls -alF'" >> ~/.bashrc
-
-CMD [ "tail", "-f", "/dev/null" ]
+EXPOSE 3000

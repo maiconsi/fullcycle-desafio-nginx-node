@@ -9,9 +9,10 @@ services:
       - node-app
 
   node-app:
-    build: .
+    build: ./node-app
     volumes:
-      - ./node-app:/home/node/app    
+      - ./node-app:/home/node/app
+    entrypoint: dockerize sh -c "npm install && node app.js" 
     depends_on:
       mysql-db:
         condition: service_healthy      

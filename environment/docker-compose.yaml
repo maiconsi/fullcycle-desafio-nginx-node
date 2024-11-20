@@ -4,7 +4,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - .:/home/node/app
+      - ../node-app:/home/node/app
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
   
